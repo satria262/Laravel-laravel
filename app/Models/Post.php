@@ -1,22 +1,18 @@
 <?php
 namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-use Illuminate\Support\Arr;
+class Post extends Model
+{
+    use HasFactory;
 
-class Post {
-    public static function all() {
-        return [
-        ['id' => 1, 'slug' => 'judul-artikel-1','title' => 'First Post', 'author' => 'author 1', 'article' => 'This is the article for the first post.'],
-        ['id' => 2, 'slug' => 'judul-artikel-2','title' => 'Second Post', 'author' => 'author 2', 'article' => 'This is the article for the second post.'],
-        ['id' => 3, 'slug' => 'judul-artikel-3','title' => 'Third Post', 'author' => 'author 3', 'article' => 'This is the article for the third post.']
+    protected $fillable = [
+        'title',
+        'slug',
+        'author',
+        'article'
     ];
-    }
-
-    public static function find($slug): array {
-
-        $post = Arr::first(static::all(), fn($post) => $post['slug'] === $slug);
-        if (!$post) {
-            return abort(404);
-        }
-    }
 }

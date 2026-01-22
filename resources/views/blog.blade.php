@@ -11,7 +11,7 @@
     <article class="text-white" class="py-8 max-w-screen-md border-b-1 border-white">
         <h2 class="mb-1 text-3xl tracking-tight font-bold text-gray-100">{{ $post['title'] }}</h2>
         <div class="text-base">
-            <a href="">{{ $post['author'] }}</a> | 1 Januari 2024
+            <a href="">{{ $post['author'] }}</a> | {{ $post['created_at']->diffForHumans() }}
         </div>
         <p class="my-4 font-light">{{ Str::limit($post['article'], 10) }}</p>
         <a href="/blog/{{ $post['slug'] }}" class="font-medium hover:underline">Read More &raquo;</a>
