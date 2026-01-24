@@ -12,7 +12,7 @@
             by
             <a href="/authors/{{ $post->author->username }}" class="hover:underline text-[#6366F1]">{{ $post->author->name }}</a>
             in
-            <a href="/categories/{{ $post->category->slug }}" class="hover:underline text-[#6366F1]">{{ $post->category->name  }}</a> | {{ $post['created_at']->diffForHumans() }}
+            <a href="/blog?category=/{{ $post->category->slug }}" class="hover:underline text-[#6366F1]">{{ $post->category->name  }}</a> | {{ $post['created_at']->diffForHumans() }}
         </div>
         <p class="my-4 font-light">{{ $post['article'] }}</p>
     <a href="/blog" class="font-medium hover:underline">Back to Posts &laquo;</a>
