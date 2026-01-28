@@ -27,8 +27,10 @@
                                 <x-nav-link href="/blog" :active="request()->is('blog')">Blog</x-nav-link>
                                 <x-nav-link href="/about" :active="request()->is('about')">About</x-nav-link>
                                 <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
-                                <x-nav-link href="/add" :active="request()->is('add')">Add new article</x-nav-link>
-                                <x-nav-link href="/my-own" :active="request()->is('own')">Your articles</x-nav-link>
+                                @if (auth()->id())
+                                    <x-nav-link href="/add" :active="request()->is('add')">Add new article</x-nav-link>
+                                    <x-nav-link href="/my-own" :active="request()->is('own')">Your articles</x-nav-link>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -69,6 +71,17 @@
                                         out</a>
                                 </el-menu>
                             </el-dropdown>
+                            @if (auth()->id())
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="p-2 bg-indigo-500 rounded-md mx-4 text-white font-semibold">Logout</button>
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="p-2 bg-indigo-500 rounded-md mx-4 text-white font-semibold">Login
+                                </a>
+                            @endif
                         </div>
                     </div>
                     <div class="-mr-2 flex md:hidden">
@@ -145,7 +158,7 @@
         <header
             class="relative bg-gray-800 after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-0 after:border-y after:border-white/10">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-white">{{ $highlight ?? ''}}</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-white">{{ $highlight ?? '' }}</h1>
             </div>
         </header>
         <main>

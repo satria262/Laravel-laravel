@@ -14,7 +14,7 @@ Route::get('/', function () {
         'title' => 'Home Page',
         'highlight' => 'Welcome to Laraveleven!'
     ])  ;
-})->middleware('auth');
+});
 
 // OWN
 Route::get('/my-own', [PostController::class, 'index'])->middleware('auth');
@@ -34,14 +34,14 @@ Route::get('/categories/{category:slug}', [PostController::class, 'categoryPenju
 
 
 // ADDING
-Route::post('/add', [PostController::class, 'store'])->name('post.store');
+Route::post('/add', [PostController::class, 'store'])->name('post.store')->middleware('auth');
 Route::get('/add', function() {
     return view('add', [
         'title' => 'Adding new post',
         'highlight' => 'Add your own article',
         'categories' => Category::all()
     ]);
-})->name('add');
+})->name('add')->middleware('auth');
 
 
 // UMUM
