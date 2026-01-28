@@ -5,43 +5,39 @@ use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
-    return view('home', [
+    return view('dashboard', [
         'title' => 'Home Page',
         'highlight' => 'Welcome to Laraveleven!'
-    ]);
-});
-// kedudukan posts setara dengan title dan highlight
+    ])  ;
+})->middleware('auth');
 
-Route::get('/blog', function () {
-    // $posts = Post::with('author', 'category')->latest()->get();
-    // dump(request('search'));
-    return view('blog', ['title' => 'Blog Page','highlight' => 'Read our latest articles!',
-    'posts' => Post::filter(request(['search']))->latest()->simplePaginate(6)->withQueryString()
-    ]);
-});
+// OWN
+Route::get('/my-own', [PostController::class, 'index'])->middleware('auth');
+Route::resource('own', PostController::class)->parameters(['own' => 'post'])->middleware('auth');
 
+
+// BLOG
+Route::get('/blog', [BlogController::class, 'index']);
 Route::get('/blog/{post:slug}', function(Post $post) {
     return view('post', ['title' => 'Single Post', 'highlight' => 'Single Post Page', 'post' => $post, 'user' => $post->author]);
 });
 
-Route::get('/authors/{user:username}', function(User $user) {
-    // $posts = $user->posts->load('category', 'author');
-    return view('blog', ['title' => count($user->posts) . ' Article by ' . $user->name, 'highlight' => 'Single Post Page', 'posts' => Post::filter(request(['search']))->latest()->simplePaginate(6)->withQueryString()  ]);
-});
 
-Route::get('/categories/{category:slug}', function(Category $category) {
-    // $posts = $category->posts->load('category', 'author');
+// AUTHOR/CATEGORY
+Route::get('/authors/{user:username}', [PostController::class, 'authorPenjurusan']);
+Route::get('/categories/{category:slug}', [PostController::class, 'categoryPenjurusan'])->name('category-slug');
 
-    return view('blog', ['title' => 'Laraveleven Blog', 'highlight' => 'Posted in ' . $category->name, 'posts' => Post::filter(request(['search']))->latest()->simplePaginate(6)->withQueryString() ]);
-});
 
-// Route::get('/authors/{user}', function(User $user) {
-//     return view('author', ['title' => 'Article by ' . $user->name, 'highlight' => 'Single Post Page', 'user' => $user,]);
-// });
+// ADDING
+Route::post('/add', [PostController::class, 'store'])->name('post.store');
 
+
+// UMUM
 Route::get('/about', function () {
     return view('about', [
         'title' => 'About Us',
@@ -54,3 +50,23 @@ Route::get('/contact', function () {
         'highlight' => 'Get in touch with us!'
     ]);
 });
+Route::get('/add', function () {
+    return view('add', [
+        'title' => 'Add new article',
+        'highlight' => 'Add your new article!'
+    ], [UserController::class, 'index']);
+})->name('add');
+Route::get('/dashboard', function () {
+    return view('dashboard', [
+        'title' => 'Home Page',
+        'highlight' => 'Welcome to Laraveleven!'
+    ]);
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

@@ -16,6 +16,8 @@ class Post extends Model
         'title',
         'slug',
         'author',
+        'author_id',
+        'category_id',
         'article'
     ];
 
@@ -23,7 +25,8 @@ class Post extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return $this->belongsTo(User::class,
+         'author_id');
     }
 
     public function category(): BelongsTo
@@ -31,7 +34,6 @@ class Post extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    // search
     public function scopeFilter(Builder $query, array $filters): void
     {
         $query->when(

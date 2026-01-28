@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title ?? 'Laraveleven' }}</title>
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
     @vite('resources/css/app.css')
 </head>
 
@@ -26,6 +27,8 @@
                                 <x-nav-link href="/blog" :active="request()->is('blog')">Blog</x-nav-link>
                                 <x-nav-link href="/about" :active="request()->is('about')">About</x-nav-link>
                                 <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
+                                <x-nav-link href="/add" :active="request()->is('add')">Add new article</x-nav-link>
+                                <x-nav-link href="/my-own" :active="request()->is('own')">Your articles</x-nav-link>
                             </div>
                         </div>
                     </div>
