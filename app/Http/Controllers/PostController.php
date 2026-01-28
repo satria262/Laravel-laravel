@@ -31,7 +31,7 @@ class PostController extends Controller
     public function store(Request $request) {
             $category = Category::where('name', $request->categoryName)->first();
 
-            if (!$category) {
+            if (filled($request->categoryName)) {
                 $ctgr = Category::create([
                     'name' => $request->categoryName,
                     'slug' => Str::slug($request->categoryName)
@@ -39,14 +39,14 @@ class PostController extends Controller
             }
 
             $category = Category::where('name', $request->categoryName)->first();
+
             $post = Post::create([
             'title' => $request->title,
             'slug' => Str::slug($request->title ),
             'author_id' => auth()->id(),
-            'category_id' => $category->id,
+            'category_id' => $request->category_id ?: $category->id,
             'article' => $request->article
         ]);
-
         return redirect(route('add', absolute: false));
     }
 

@@ -14,9 +14,18 @@
                 <input type="text" name="title" placeholder="Type your title here" class=" rounded-md bg-transparent">
             </div>
             <div class="flex flex-col">
-                <label class="bg-gray-900 -mb-3 w-fit p-1 ml-2 z-10">Category</label>
-                <input type="text" name="categoryName" placeholder="Select your category"
-                    class=" rounded-md bg-transparent">
+                <label class="bg-gray-900 -mb-3 w-fit p-1 ml-2 z-10">Select existing category</label>
+                <select name="category_id" class="rounded-md bg-transparent text-white">
+                    <option value=""></option>
+                    @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-span-2 flex flex-col">
+                <label class="bg-gray-900 -mb-3 w-fit p-1 ml-2 z-10">Or create new category</label>
+                <input type="text" name="categoryName" placeholder="Please either choose an existing category or create a new one"
+                    class=" rounded-md bg-transparent focus:placeholder-yellow-400 duration-750">
             </div>
             <div class="col-span-2 flex flex-col">
                 <label class="pl-1 bg-gray-900 -mb-3 w-fit p-1 ml-2 z-10">Body</label>

@@ -35,6 +35,13 @@ Route::get('/categories/{category:slug}', [PostController::class, 'categoryPenju
 
 // ADDING
 Route::post('/add', [PostController::class, 'store'])->name('post.store');
+Route::get('/add', function() {
+    return view('add', [
+        'title' => 'Adding new post',
+        'highlight' => 'Add your own article',
+        'categories' => Category::all()
+    ]);
+})->name('add');
 
 
 // UMUM
@@ -50,12 +57,6 @@ Route::get('/contact', function () {
         'highlight' => 'Get in touch with us!'
     ]);
 });
-Route::get('/add', function () {
-    return view('add', [
-        'title' => 'Add new article',
-        'highlight' => 'Add your new article!'
-    ], [UserController::class, 'index']);
-})->name('add');
 Route::get('/dashboard', function () {
     return view('dashboard', [
         'title' => 'Home Page',
