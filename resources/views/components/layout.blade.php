@@ -36,6 +36,7 @@
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-4 flex items-center md:ml-6">
+                            @if (auth()->id())
                             <button type="button"
                                 class="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
                                 <span class="absolute -inset-1.5"></span>
@@ -71,7 +72,6 @@
                                         out</a>
                                 </el-menu>
                             </el-dropdown>
-                            @if (auth()->id())
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"

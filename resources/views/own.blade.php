@@ -7,7 +7,7 @@
     </x-slot:highlight>
     <div class="text-white border-1 border-white rounded-md py-4">
         <div class="flex flex-row justify-between border-b-2 py-1 mb-2 px-4 py-2">
-            <p class="text-3xl font-semibold">{{ $count }} Posts made by {{ auth()->user()->username }}</p>
+            <p class="text-3xl font-semibold">{{ $count }} Posts made by {{ auth()->user()->username }} in {{ $countCategory }} Category </p>
             <a href="/add">
                 <button class="flex flex-row items-center bg-[#6366F1] rounded-lg space-x-2 p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

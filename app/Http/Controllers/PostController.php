@@ -14,8 +14,9 @@ class PostController extends Controller
 {
     public function index() {
         $posts = Post::where('author_id', auth()->id())->latest()->simplePaginate(6)->withQueryString();
+        $countCategory = Post::where('author_id', auth()->id())->distinct('category_id')->count('category_id');
         $count = count($posts);
-        return view('own', [ 'title' => auth()->user()->username . "'s blog", 'highlight' => "Posts made by you, " . auth()->user()->name, 'posts' => $posts, 'count' => $count]);
+        return view('own', [ 'title' => auth()->user()->username . "'s blog", 'highlight' => "Posts made by you, " . auth()->user()->name, 'posts' => $posts, 'count' => $count, 'countCategory' => $countCategory]);
     }
 
     public function categoryPenjurusan(Request $request ,Category $category) {
